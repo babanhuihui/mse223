@@ -24,7 +24,7 @@ public class Ship {
         }
         while(map.planeInArea(this.x, this.y));
 	}
-	public void move(){
+	public void move(Wind wind){
 		
 	}
 	public double generateHoldingTime(){

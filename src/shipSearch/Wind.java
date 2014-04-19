@@ -12,6 +12,7 @@ public class Wind {
 		return 0;
 	}
 	public int[] changeDirection(){
-		return null;	
+		int[] a = {1,2};
+		return a;	
 	}
 }

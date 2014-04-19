@@ -15,10 +15,16 @@ public class Map {
 		} 
 		return true;
 	}
+	
+	public void initialPlane(int xCor, int yCor, int index){
+		grid[xCor][yCor] = index;
+	}
+	
 	public void setPlane(int xCor, int yCor, Plane plane){
 		grid[plane.x][plane.y] = 0;
 		grid[xCor][yCor] = plane.index;
 	}
+	
 	public boolean planeInArea(int xCor, int yCor){
 		if(grid[xCor][yCor] != 0){
 			return true;
