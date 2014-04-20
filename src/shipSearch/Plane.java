@@ -64,7 +64,19 @@ public class Plane {
 	}
 	
 	public double generateHoldingTime(){
-		double holdingTime = unigenX.nextValue(1) * 0.25 + 1;
+		double holdingTime = unigenT.nextValue(3) * 0.25 + 1;
 		return holdingTime;
+	}
+	
+	public int getX(){
+		return x;
+	}
+	
+	public int getY(){
+		return y;
+	}
+	
+	public int getIndex(){
+		return index;
 	}
 }
