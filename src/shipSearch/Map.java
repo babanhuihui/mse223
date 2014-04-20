@@ -21,9 +21,6 @@ public class Map {
 		grid[xCor][yCor] = index;
 	}
 	
-	public void setShip(int xCor, int yCor, Ship ship){
-		
-	}
 	
 	public void setPlane(int xCor, int yCor, Plane plane){
 		grid[plane.x][plane.y] = 0;

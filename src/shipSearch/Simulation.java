@@ -87,6 +87,7 @@ public class Simulation {
      * Please Program here
      */
     static double doRepA() {
+    	//System.out.println("lalala");
     	boolean found = false;
         Wind wind = new Wind();
         Map map = new Map(4, 4);
@@ -118,15 +119,22 @@ public class Simulation {
 			switch(minClock.type){
 			case Plane1Clock:
 				plane1.move();
+				pendingPlane = checkIfInSameArea(ship, plane1, plane2,searchClock);
+				minClock.time = plane1.generateHoldingTime();
 				break;
 			case Plane2Clock:
 				plane2.move();
+				pendingPlane = checkIfInSameArea(ship, plane1, plane2, searchClock);
+				minClock.time = plane2.generateHoldingTime();
 				break;
 			case ShipClock:
 				ship.move(wind);
+				pendingPlane = checkIfInSameArea(ship, plane1, plane2, searchClock);
+				minClock.time = ship.generateHoldingTime();
 				break;
 			case WindClock:
 				wind.changeDirection();
+				minClock.time = wind.generateHoldingTime();
 				break;
 			case SearchClock:
 				found = checkIfFound(pendingPlane, ship);
@@ -152,7 +160,19 @@ public class Simulation {
         gEstimatorA.processNextValue(totalTime);
         return totalTime;
     }
-//	public static void main(int argc, char[] argv){
+
+	private static Plane checkIfInSameArea(Ship ship, Plane plane1, Plane plane2, Clock searchClock) {
+		// TODO Auto-generated method stub
+		if (ship.x == plane1.x && ship.y == plane1.y){
+			searchClock.time =  generateSearchingTime();
+			return plane1;
+		}else if (ship.x == plane2.y && ship.y == plane2.y){
+			searchClock.time = generateSearchingTime();
+			return plane2;
+		}
+		return null;
+	}
+	//	public static void main(int argc, char[] argv){
 //		Map map = new Map(4, 4);
 //		Plane plane1 = new Plane(1, map);
 //		Plane plane2 = new Plane(2, map);
@@ -168,5 +188,16 @@ public class Simulation {
 		}
 		pendingPlane = null;
 		return false;
+	}
+	public static double generateSearchingTime(){
+		Clcg4 unigen = new Clcg4();
+	    unigen.initDefault();
+		double u = unigen.nextValue(3);
+		if (u <= 0.5){
+			return Math.sqrt(2*u);
+		}else
+		{
+			return 2-Math.sqrt(2 - 2*u);
+		}
 	}
 }
