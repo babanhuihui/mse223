@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 
+
 public class Simulation {
 	
 	private static Clcg4 unigen;
@@ -86,14 +87,43 @@ public class Simulation {
      * Please Program here
      */
     static double doRepA() {
+    	boolean found = false;
         double val = 0;
         Map map = new Map(4, 4);
 		Plane plane1 = new Plane(1, map);
 		Plane plane2 = new Plane(2, map);
+		Ship ship = new Ship(map);
+		Wind wind = new Wind();
 		//array of c1,c2,c3,c4,c5
-		ArrayList<Double> timeChain = new ArrayList<Double>();
+		ArrayList<Clock> timeChain = new ArrayList<Clock>();
+		//Add in the 5 clocks
+		Clock planeClock = new Clock(Clock.ClockType.Plane1Clock, plane1.generateHoldingTime());
+		timeChain.add(planeClock);
+		Clock plane2Clock = new Clock(Clock.ClockType.Plane2Clock, plane2.generateHoldingTime());
+		timeChain.add(plane2Clock);
+		Clock shipClock = new Clock(Clock.ClockType.ShipClock, ship.generateHoldingTime());
+		timeChain.add(shipClock);
+		Clock windClock = new Clock(Clock.ClockType.WindClock, wind.generateHoldingTime());
+		timeChain.add(windClock);
+		Clock searchClock = new Clock(Clock.ClockType.SearchClock, -1);
+		timeChain.add(searchClock);
 		
-		
+		//Make the transition
+		while(!found){
+			Clock minClock = Clock.findMinTime(timeChain);
+			switch(minClock.type){
+			case Plane1Clock:
+				break;
+			case Plane2Clock:
+				break;
+			case ShipClock:
+				break;
+			case WindClock:
+				break;
+			case SearchClock:
+				break;
+			}
+		}
 		
         if (debug >= 2) System.out.println();
         gEstimatorA.processNextValue(val);
