@@ -8,6 +8,7 @@ public class Map {
 	{
 		this.row = row;
 		this.col = col;
+		grid = new int[row][col];
 	}
 	public boolean inMap(int Arow, int Acol){
 		if ( Arow < 0 || Arow > row-1 ||Acol < 0 || Acol > col-1){
@@ -18,6 +19,10 @@ public class Map {
 	
 	public void initialPlane(int xCor, int yCor, int index){
 		grid[xCor][yCor] = index;
+	}
+	
+	public void setShip(int xCor, int yCor, Ship ship){
+		
 	}
 	
 	public void setPlane(int xCor, int yCor, Plane plane){

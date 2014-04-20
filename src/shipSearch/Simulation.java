@@ -88,12 +88,12 @@ public class Simulation {
      */
     static double doRepA() {
     	boolean found = false;
-        double val = 0;
         Wind wind = new Wind();
         Map map = new Map(4, 4);
 		Plane plane1 = new Plane(1, map);
 		Plane plane2 = new Plane(2, map);
 		Ship ship = new Ship(map);
+		double totalTime = 0;
 		
 		//array of c1,c2,c3,c4,c5
 		ArrayList<Clock> timeChain = new ArrayList<Clock>();
@@ -109,10 +109,11 @@ public class Simulation {
 		Clock searchClock = new Clock(Clock.ClockType.SearchClock, -1);
 		timeChain.add(searchClock);
 		
+		Plane pendingPlane = null;
 		//Make the transition
 		while(!found){
 			Clock minClock = Clock.findMinTime(timeChain);
-			
+			double timeElapsed = minClock.time;
 			//Depending on the clock, making the relevant transitions
 			switch(minClock.type){
 			case Plane1Clock:
@@ -128,17 +129,28 @@ public class Simulation {
 				wind.changeDirection();
 				break;
 			case SearchClock:
-				found = checkIfFound();
+				found = checkIfFound(pendingPlane, ship);
+				minClock.time = -1;
 				break;
 			}
-			
 			//Updating the clocks readings.
+			
+			for (int i = 0; i < timeChain.size(); i ++){
+				Clock clock = timeChain.get(i);
+				if (clock.time != -1){
+					clock.time -= timeElapsed;
+				}
+			}
+			//updating the state
+			
+			//TODO updating the total time
+			totalTime += timeElapsed;
 			
 		}
 		
         if (debug >= 2) System.out.println();
-        gEstimatorA.processNextValue(val);
-        return val;
+        gEstimatorA.processNextValue(totalTime);
+        return totalTime;
     }
 //	public static void main(int argc, char[] argv){
 //		Map map = new Map(4, 4);
@@ -147,8 +159,14 @@ public class Simulation {
 //		int[] a = {1,2};
 //		System.out.print("gaga");
 //	}
-	private static boolean checkIfFound() {
+	private static boolean checkIfFound(Plane pendingPlane, Ship ship) {
 		// TODO check if the ship is already found
+		if (pendingPlane != null){
+			if (pendingPlane.x == ship.x && pendingPlane.y == ship.y){
+				return true;
+			}
+		}
+		pendingPlane = null;
 		return false;
 	}
 }
