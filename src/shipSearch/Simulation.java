@@ -89,11 +89,12 @@ public class Simulation {
     static double doRepA() {
     	boolean found = false;
         double val = 0;
+        Wind wind = new Wind();
         Map map = new Map(4, 4);
 		Plane plane1 = new Plane(1, map);
 		Plane plane2 = new Plane(2, map);
 		Ship ship = new Ship(map);
-		Wind wind = new Wind();
+		
 		//array of c1,c2,c3,c4,c5
 		ArrayList<Clock> timeChain = new ArrayList<Clock>();
 		//Add in the 5 clocks
@@ -115,14 +116,19 @@ public class Simulation {
 			//Depending on the clock, making the relevant transitions
 			switch(minClock.type){
 			case Plane1Clock:
+				plane1.move();
 				break;
 			case Plane2Clock:
+				plane2.move();
 				break;
 			case ShipClock:
+				ship.move(wind);
 				break;
 			case WindClock:
+				wind.changeDirection();
 				break;
 			case SearchClock:
+				found = checkIfFound();
 				break;
 			}
 			
@@ -141,4 +147,8 @@ public class Simulation {
 //		int[] a = {1,2};
 //		System.out.print("gaga");
 //	}
+	private static boolean checkIfFound() {
+		// TODO check if the ship is already found
+		return false;
+	}
 }
