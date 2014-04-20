@@ -111,6 +111,8 @@ public class Simulation {
 		//Make the transition
 		while(!found){
 			Clock minClock = Clock.findMinTime(timeChain);
+			
+			//Depending on the clock, making the relevant transitions
 			switch(minClock.type){
 			case Plane1Clock:
 				break;
@@ -123,6 +125,9 @@ public class Simulation {
 			case SearchClock:
 				break;
 			}
+			
+			//Updating the clocks readings.
+			
 		}
 		
         if (debug >= 2) System.out.println();
