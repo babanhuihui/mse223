@@ -73,6 +73,10 @@ public class Wind {
 	public void changeDirection(){
 		changeDirectionX();
 		changeDirectionY();
+//		System.out.print("windX:");
+//		System.out.print(this.x);
+//		System.out.print("windY:");
+//		System.out.println(this.y);
 	}
 	
 	public void changeDirectionX(){

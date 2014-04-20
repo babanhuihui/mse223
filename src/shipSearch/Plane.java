@@ -35,6 +35,10 @@ public class Plane {
         }
         while(map.planeInArea(this.x, this.y));
         map.initialPlane(x, y, index);	
+//        System.out.print("planeX:");
+//		System.out.print(this.x);
+//		System.out.print("planeY:");
+//		System.out.println(this.y);
 	}
 	
 	public void move(){
@@ -43,11 +47,6 @@ public class Plane {
 		do{
 			double moveX = unigenX.nextValue(1);
 			double moveY = unigenY.nextValue(2);
-			//System.out.print("seedX:");
-			//System.out.print(moveX);
-			//System.out.print("seedY:");
-			//System.out.println(moveY);
-			//System.out.println(1/3);
 			if( moveX < 1.0/3){
 				tempX = this.x + 1;
 			}else if(moveX < 2.0/3){
@@ -75,6 +74,10 @@ public class Plane {
 		int swapY = this.y;
 		this.y = tempY;
 		map.setPlane(swapX, swapY, this);
+//		System.out.print("planeX:");
+//		System.out.print(this.x);
+//		System.out.print("planeY:");
+//		System.out.println(this.y);
 	}
 	
 	public double generateHoldingTime(){

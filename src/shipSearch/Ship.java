@@ -23,11 +23,13 @@ public class Ship {
         unigenT.initDefault();
         //this.wind = wind;
         this.map = map;
-        //do{
     		this.x = (int) Math.floor(unigenX.nextValue(1) * 4);
     		this.y = (int) Math.floor(unigenY.nextValue(2) * 4);
-        //}
-        //while(map.planeInArea(this.x, this.y));
+//    		System.out.print("shipX:");
+//    		System.out.print(this.x);
+//    		System.out.print("shipY:");
+//    		System.out.println(this.y);
+
 	}
 	public void move(Wind wind){
 		int tempX,tempY;
@@ -40,43 +42,43 @@ public class Ship {
 			if(x == map.row){
 				probAX = 1;	 //right
 				probBX = 1;//stay
-				probCX = 1/6;//left
+				probCX = 1.0/6;//left
 			}else if(x == 0){
 				probAX = 1;
-				probBX = 2/3;
-				probCX = 1/3;
+				probBX = 2.0/3;
+				probCX = 1.0/3;
 			}else{
 				probAX = 1;
-				probBX = 1/3;
-				probCX = 1/6;
+				probBX = 1.0/3;
+				probCX = 1.0/6;
 			}
 		}else if(windX == 0){
 			if(x == map.row){
 				probAX = 1;	 //right
 				probBX = 1;//stay
-				probCX = 1/2;//left
+				probCX = 1.0/2;//left
 			}else if(x == 0){
 				probAX = 1;
-				probBX = 1/2;
+				probBX = 1.0/2;
 				probCX = 0;
 			}else{
 				probAX = 1;
-				probBX = 2/3;
-				probCX = 1/3;
+				probBX = 2.0/3;
+				probCX = 1.0/3;
 			}
 		}else if(windX == -1){
 			if(x == map.row){
 				probAX = 1;	 //right
 				probBX = 1;//stay
-				probCX = 2/3;//left
+				probCX = 2.0/3;//left
 			}else if(x == 0){
 				probAX = 1;
-				probBX = 5/6;
+				probBX = 5.0/6;
 				probCX = 0;
 			}else{
 				probAX = 1;
-				probBX = 5/6;
-				probCX = 1/6;
+				probBX = 5.0/6;
+				probCX = 1.0/6;
 			}
 		}
 		
@@ -85,43 +87,43 @@ public class Ship {
 			if(y == map.row){
 				probAY = 1;	 //right
 				probBY = 1;//stay
-				probCY = 1/6;//left
+				probCY = 1.0/6;//left
 			}else if(y == 0){
 				probAY = 1;
-				probBY = 2/3;
-				probCY = 1/3;
+				probBY = 2.0/3;
+				probCY = 1.0/3;
 			}else{
 				probAY = 1;
-				probBY = 1/3;
-				probCY = 1/6;
+				probBY = 1.0/3;
+				probCY = 1.0/6;
 			}
 		}else if(windY == 0){
 			if(y == map.row){
 				probAY = 1;	 //right
 				probBY = 1;//stay
-				probCY = 1/2;//left
+				probCY = 1.0/2;//left
 			}else if(y == 0){
 				probAY = 1;
-				probBY = 1/2;
+				probBY = 1.0/2;
 				probCY = 0;
 			}else{
 				probAY = 1;
-				probBY = 2/3;
-				probCY = 1/3;
+				probBY = 2.0/3;
+				probCY = 1.0/3;
 			}
 		}else if(windY == -1){
 			if(y == map.row){
 				probAY = 1;	 //right
 				probBY = 1;//stay
-				probCY = 2/3;//left
+				probCY = 2.0/3;//left
 			}else if(y == 0){
 				probAY = 1;
-				probBY = 5/6;
+				probBY = 5.0/6;
 				probCY = 0;
 			}else{
 				probAY = 1;
-				probBY = 5/6;
-				probCY = 1/6;
+				probBY = 5.0/6;
+				probCY = 1.0/6;
 			}
 		}
 
@@ -148,6 +150,10 @@ public class Ship {
 		
 		this.x = tempX;
 		this.y = tempY;
+//		System.out.print("shipX:");
+//		System.out.print(this.x);
+//		System.out.print("shipY:");
+//		System.out.println(this.y);
 	}
 	
 	public double generateHoldingTime(){

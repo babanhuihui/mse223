@@ -25,7 +25,7 @@ public class Map {
 	public void setPlane(int xCor, int yCor, Plane plane){
 		grid[xCor][yCor] = 0;
 		grid[plane.x][plane.y] = plane.index;
-		System.out.print("Plane" + plane.index + " in Coordinate:" + plane.x + " , " + plane.y);
+		//System.out.print("Plane" + plane.index + " in Coordinate:" + plane.x + " , " + plane.y);
 	}
 	
 	public boolean planeInArea(int xCor, int yCor){

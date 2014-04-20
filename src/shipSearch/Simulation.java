@@ -87,7 +87,6 @@ public class Simulation {
      * Please Program here
      */
     static double doRepA() {
-    	//System.out.println("lalala");
     	boolean found = false;
         Wind wind = new Wind();
         Map map = new Map(4, 4);
@@ -114,21 +113,21 @@ public class Simulation {
 		//Make the transition
 		while(!found){
 			Clock minClock = Clock.findMinTime(timeChain);
-			System.out.println("minClock" + minClock.type);
+			//System.out.println("minClock" + minClock.type);
 			double timeElapsed = minClock.time;
 			//Depending on the clock, making the relevant transitions
 			switch(minClock.type){
 			case Plane1Clock:
-				System.out.println("plane1");
+				//System.out.println("plane1");
 				plane1.move();
-				System.out.println("plane1step1");
+				//System.out.println("plane1step1");
 				pendingPlane = checkIfInSameArea(ship, plane1, plane2,searchClock);
 				minClock.time = plane1.generateHoldingTime();
 				break;
 			case Plane2Clock:
-				System.out.println("plane2");
+				//System.out.println("plane2");
 				plane2.move();
-				System.out.println("plane2step2");
+				//System.out.println("plane2step2");
 				pendingPlane = checkIfInSameArea(ship, plane1, plane2, searchClock);
 				minClock.time = plane2.generateHoldingTime();
 				break;
@@ -144,7 +143,10 @@ public class Simulation {
 				minClock.time = wind.generateHoldingTime();
 				break;
 			case SearchClock:
-				found = checkIfFound(pendingPlane, ship);
+				System.out.println("in same block now");
+				//i don't understand your pending plane mechanism here
+				//found = checkIfFound(pendingPlane, ship);
+				found = checkIfFound(pendingPlane, ship) || checkIfFoundDirectly(ship, plane1, plane2);
 				minClock.time = -1;
 				break;
 			}
@@ -160,10 +162,12 @@ public class Simulation {
 			
 			//TODO updating the total time
 			totalTime += timeElapsed;
+			//System.out.println(totalTime);
 			
 		}
 		
         if (debug >= 2) System.out.println();
+        //System.out.println(totalTime);
         gEstimatorA.processNextValue(totalTime);
         return totalTime;
     }
@@ -179,13 +183,16 @@ public class Simulation {
 		}
 		return null;
 	}
-	//	public static void main(int argc, char[] argv){
-//		Map map = new Map(4, 4);
-//		Plane plane1 = new Plane(1, map);
-//		Plane plane2 = new Plane(2, map);
-//		int[] a = {1,2};
-//		System.out.print("gaga");
-//	}
+
+	private static boolean checkIfFoundDirectly(Ship ship, Plane plane1, Plane plane2) {
+		// TODO Auto-generated method stub
+		if (ship.x == plane1.x && ship.y == plane1.y){
+			return true;
+		}else if (ship.x == plane2.y && ship.y == plane2.y){
+			return true;
+		}
+		return false;
+	}
 	private static boolean checkIfFound(Plane pendingPlane, Ship ship) {
 		// TODO check if the ship is already found
 		if (pendingPlane != null){
@@ -196,6 +203,7 @@ public class Simulation {
 		pendingPlane = null;
 		return false;
 	}
+	
 	public static double generateSearchingTime(){
 		Clcg4 unigen = new Clcg4();
 	    unigen.initDefault();
