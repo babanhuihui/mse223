@@ -114,21 +114,28 @@ public class Simulation {
 		//Make the transition
 		while(!found){
 			Clock minClock = Clock.findMinTime(timeChain);
+			System.out.println("minClock" + minClock.type);
 			double timeElapsed = minClock.time;
 			//Depending on the clock, making the relevant transitions
 			switch(minClock.type){
 			case Plane1Clock:
+				System.out.println("plane1");
 				plane1.move();
+				System.out.println("plane1step1");
 				pendingPlane = checkIfInSameArea(ship, plane1, plane2,searchClock);
 				minClock.time = plane1.generateHoldingTime();
 				break;
 			case Plane2Clock:
+				System.out.println("plane2");
 				plane2.move();
+				System.out.println("plane2step2");
 				pendingPlane = checkIfInSameArea(ship, plane1, plane2, searchClock);
 				minClock.time = plane2.generateHoldingTime();
 				break;
 			case ShipClock:
-				ship.move(wind);
+				System.out.println("ship");
+				//ship.move(wind);
+				System.out.println("shipstep2");
 				pendingPlane = checkIfInSameArea(ship, plane1, plane2, searchClock);
 				minClock.time = ship.generateHoldingTime();
 				break;

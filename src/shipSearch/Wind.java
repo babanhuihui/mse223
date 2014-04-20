@@ -78,9 +78,9 @@ public class Wind {
 	public void changeDirectionX(){
 		int directionX;
 		double moveX = unigenX.nextValue(1);
-		if( moveX < 1/3){
+		if( moveX < 1.0/3){
 			directionX = 1;
-		}else if(moveX < 2/3){
+		}else if(moveX < 2.0/3){
 			directionX = 0;
 		}else{
 			directionX = -1;
@@ -91,9 +91,9 @@ public class Wind {
 	public void changeDirectionY(){
 		int directionY;
 		double moveY = unigenY.nextValue(1);
-		if( moveY < 1/3){
+		if( moveY < 1.0/3){
 			directionY = 1;
-		}else if(moveY < 2/3){
+		}else if(moveY < 2.0/3){
 			directionY = 0;
 		}else{
 			directionY = -1;
