@@ -88,11 +88,11 @@ public class Simulation {
      */
     static double doRepA() {
     	boolean found = false;
-        Wind wind = new Wind();
+        Wind wind = new Wind(unigen);
         Map map = new Map(4, 4);
-		Plane plane1 = new Plane(1, map);
-		Plane plane2 = new Plane(2, map);
-		Ship ship = new Ship(map);
+		Plane plane1 = new Plane(1, map,unigen);
+		Plane plane2 = new Plane(2, map, unigen);
+		Ship ship = new Ship(map, unigen);
 		double totalTime = 0;
 		
 		//array of c1,c2,c3,c4,c5
@@ -133,7 +133,7 @@ public class Simulation {
 				break;
 			case ShipClock:
 				System.out.println("ship");
-				//ship.move(wind);
+				ship.move(wind);
 				System.out.println("shipstep2");
 				pendingPlane = checkIfInSameArea(ship, plane1, plane2, searchClock);
 				minClock.time = ship.generateHoldingTime();

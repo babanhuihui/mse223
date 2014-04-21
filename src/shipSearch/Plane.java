@@ -4,34 +4,23 @@ public class Plane {
 	int x,y;
 	int index;
 	Map map;
-	private static Clcg4 unigenX;
-	private static Clcg4 unigenY;
-	private static Clcg4 unigenT;
+	private static Clcg4 unigen;
+
 	//double timeToStay;
 	public Plane(int x, int y, int index){
-		unigenX = new Clcg4();
-	    unigenX.initDefault();
-	    unigenY = new Clcg4();
-	    unigenY.initDefault();
-	    unigenT = new Clcg4();
-	    unigenT.initDefault();
+		
 		this.x = x;
 		this.y = y;
 		this.index = index;
 	}
 	
-	public Plane(int index, Map map){
-        unigenX = new Clcg4();
-        unigenX.initDefault();
-        unigenY = new Clcg4();
-        unigenY.initDefault();
-        unigenT = new Clcg4();
-        unigenT.initDefault();
+	public Plane(int index, Map map, Clcg4 gen){
+		this.unigen = gen;
         this.map = map;
         this.index = index;
         do{
-    		this.x = (int) Math.floor(unigenX.nextValue(1) * 4);
-    		this.y = (int) Math.floor(unigenY.nextValue(2) * 4);
+    		this.x = (int) Math.floor(unigen.nextValue(1) * 4);
+    		this.y = (int) Math.floor(unigen.nextValue(2) * 4);
         }
         while(map.planeInArea(this.x, this.y));
         map.initialPlane(x, y, index);	
@@ -45,8 +34,8 @@ public class Plane {
 		//int tempX = this.x, tempY = this.y;
 		int tempX,tempY;
 		do{
-			double moveX = unigenX.nextValue(1);
-			double moveY = unigenY.nextValue(2);
+			double moveX = unigen.nextValue(1);
+			double moveY = unigen.nextValue(2);
 			if( moveX < 1.0/3){
 				tempX = this.x + 1;
 			}else if(moveX < 2.0/3){
@@ -81,7 +70,7 @@ public class Plane {
 	}
 	
 	public double generateHoldingTime(){
-		double holdingTime = unigenT.nextValue(3) * 0.25 + 1;
+		double holdingTime = unigen.nextValue(3) * 0.25 + 1;
 		return holdingTime;
 	}
 	

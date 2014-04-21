@@ -3,9 +3,7 @@ package shipSearch;
 public class Ship {
 	int x,y;
 	Map map;
-	private static Clcg4 unigenX;
-	private static Clcg4 unigenY;
-	private static Clcg4 unigenT;
+	private static Clcg4 unigen;
 	//public Wind wind;
 	//double timeToStay;
 	
@@ -14,17 +12,12 @@ public class Ship {
 		this.y = y;
 	}
 	
-	public Ship(Map map){
-        unigenX = new Clcg4();
-        unigenX.initDefault();
-        unigenY = new Clcg4();
-        unigenY.initDefault();
-        unigenT = new Clcg4();
-        unigenT.initDefault();
+	public Ship(Map map, Clcg4 gen){
+		this.unigen = gen;
         //this.wind = wind;
         this.map = map;
-    		this.x = (int) Math.floor(unigenX.nextValue(1) * 4);
-    		this.y = (int) Math.floor(unigenY.nextValue(2) * 4);
+    		this.x = (int) Math.floor(unigen.nextValue(1) * 4);
+    		this.y = (int) Math.floor(unigen.nextValue(2) * 4);
 //    		System.out.print("shipX:");
 //    		System.out.print(this.x);
 //    		System.out.print("shipY:");
@@ -130,8 +123,8 @@ public class Ship {
 		
 		
 		do{
-			double moveX = unigenX.nextValue(1);
-			double moveY = unigenY.nextValue(2);	
+			double moveX = unigen.nextValue(1);
+			double moveY = unigen.nextValue(2);	
 			if( moveX < probCX){
 				tempX = this.x - 1;
 			}else if(moveX < probBX){
@@ -157,7 +150,7 @@ public class Ship {
 	}
 	
 	public double generateHoldingTime(){
-		double holdingTime = 0.5 * Math.pow(unigenT.nextValue(3), -0.5);
+		double holdingTime = 0.5 * Math.pow(unigen.nextValue(3), -0.5);
 		return holdingTime;
 	}
 	

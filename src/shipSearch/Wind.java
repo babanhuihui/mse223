@@ -7,38 +7,26 @@ public class Wind {
 	//public ArrayList<Integer> direction;
 	public int x;
 	public int y;
-	private static Clcg4 unigenX;
-	private static Clcg4 unigenY;
-	private static Clcg4 unigenT;
+	private static Clcg4 unigen;
+
 	
 	public Wind(double lamuda)
 	{
-		unigenX = new Clcg4();
-	    unigenX.initDefault();
-	    unigenY = new Clcg4();
-	    unigenY.initDefault();
-	    unigenT = new Clcg4();
-	    unigenT.initDefault();
 	    this.lamuda = lamuda;
 		//direction = changeDirection();
 	    changeDirection();
 	}
 	
-	public Wind()
+	public Wind(Clcg4 gen)
 	{
-		unigenX = new Clcg4();
-	    unigenX.initDefault();
-	    unigenY = new Clcg4();
-	    unigenY.initDefault();
-	    unigenT = new Clcg4();
-	    unigenT.initDefault();
-	    this.lamuda = 1;
+	    this.unigen = gen;
+		this.lamuda = 1;
 		//direction = changeDirection();
 	    changeDirection();
 	}
 	
 	public double generateHoldingTime(){
-		double x = unigenT.nextValue(3);
+		double x = unigen.nextValue(3);
 		double holdingTime = lamuda * Math.exp(-lamuda * x);
 		return holdingTime;
 	}
@@ -81,7 +69,7 @@ public class Wind {
 	
 	public void changeDirectionX(){
 		int directionX;
-		double moveX = unigenX.nextValue(1);
+		double moveX = unigen.nextValue(1);
 		if( moveX < 1.0/3){
 			directionX = 1;
 		}else if(moveX < 2.0/3){
@@ -94,7 +82,7 @@ public class Wind {
 	
 	public void changeDirectionY(){
 		int directionY;
-		double moveY = unigenY.nextValue(1);
+		double moveY = unigen.nextValue(1);
 		if( moveY < 1.0/3){
 			directionY = 1;
 		}else if(moveY < 2.0/3){
