@@ -14,9 +14,11 @@ public class Simulation {
     private static int numReps;
     private static double epsilon;
     private static DecimalFormat df1; 
+    private static int count;
     
     public static void main(String[] args) {
-        gEstimatorA = new Estimator(1.96,"95%", "##.####"); // 95% CI       
+        //gEstimatorA = new Estimator(1.96,"95%", "##.####"); // 95% CI       
+        gEstimatorA = new Estimator(2.33,"98%", "##.####"); // 95% CI       
         unigen = new Clcg4();
         unigen.initDefault();
    
@@ -26,9 +28,9 @@ public class Simulation {
         ci = false;
         String arg;
         int i=0;
-        epsilon = 0.005;
+        epsilon = 0.01;
         double valA;
-        
+        count = 0;
         // parse command line arguments
         if (args.length < 1) {
           System.out.println("usage: Simulation n [-dm -t -i]");
@@ -53,11 +55,11 @@ public class Simulation {
         }
 
         //re-initialize generator for production runs
-        if (!trial) {
-            unigen.initGenerator(1, unigen.NewSeed);
-        
-        }
-        
+//        if (!trial) {
+//            unigen.initGenerator(1, unigen.NewSeed);
+//        
+//        }
+//        
         //run the simulation repetitions and collect stats
         for (int rep = 1; rep <= numReps; rep++) {
             valA = doRepA();
@@ -68,7 +70,11 @@ public class Simulation {
             if (debug >=2) System.out.println();
         }
         
-        // print results
+        // print result
+        System.out.print("the count is");
+        System.out.println(count);
+        System.out.print("Prob is ");
+        System.out.println(count/500.0);
         System.out.print("Average income InvestorA: "+df1.format(gEstimatorA.mean())+"     ");
         if (ci){
         	System.out.println();
@@ -79,7 +85,7 @@ public class Simulation {
         else System.out.println();
         if (trial) {
             System.out.println("Est. # of repetitions for +/- "+epsilon+" accuracy: "
-                    + gEstimatorA.numberOfTrialsNeeded(epsilon,false));
+                    + gEstimatorA.numberOfTrialsNeeded(epsilon,true));
         }
         
     }
@@ -88,7 +94,7 @@ public class Simulation {
      */
     static double doRepA() {
     	boolean found = false;
-        Wind wind = new Wind(unigen);
+        Wind wind = new Wind(1.5,unigen);
         Map map = new Map(4, 4);
 		Plane plane1 = new Plane(1, map,unigen);
 		Plane plane2 = new Plane(2, map, unigen);
@@ -146,8 +152,10 @@ public class Simulation {
 				System.out.println("in same block now");
 				//i don't understand your pending plane mechanism here
 				//found = checkIfFound(pendingPlane, ship);
-				found = checkIfFound(pendingPlane, ship) || checkIfFoundDirectly(ship, plane1, plane2);
-				minClock.time = -1;
+				found = checkIfFound(pendingPlane, ship, searchClock) || checkIfFoundDirectly(ship, plane1, plane2, searchClock);
+				if(!found){
+					minClock.time = -1;
+				}
 				break;
 			}
 			//Updating the clocks readings.
@@ -165,10 +173,13 @@ public class Simulation {
 			//System.out.println(totalTime);
 			
 		}
-		
+		if(totalTime < 24){
+			count++;
+		}
         if (debug >= 2) System.out.println();
         //System.out.println(totalTime);
         gEstimatorA.processNextValue(totalTime);
+        //gEstimatorA.processNextValue(searchClock.time);
         return totalTime;
     }
 
@@ -184,19 +195,22 @@ public class Simulation {
 		return null;
 	}
 
-	private static boolean checkIfFoundDirectly(Ship ship, Plane plane1, Plane plane2) {
+	private static boolean checkIfFoundDirectly(Ship ship, Plane plane1, Plane plane2, Clock searchClock) {
 		// TODO Auto-generated method stub
 		if (ship.x == plane1.x && ship.y == plane1.y){
+			searchClock.time =  generateSearchingTime();
 			return true;
 		}else if (ship.x == plane2.y && ship.y == plane2.y){
+			searchClock.time =  generateSearchingTime();
 			return true;
 		}
 		return false;
 	}
-	private static boolean checkIfFound(Plane pendingPlane, Ship ship) {
+	private static boolean checkIfFound(Plane pendingPlane, Ship ship, Clock searchClock) {
 		// TODO check if the ship is already found
 		if (pendingPlane != null){
 			if (pendingPlane.x == ship.x && pendingPlane.y == ship.y){
+				searchClock.time =  generateSearchingTime();
 				return true;
 			}
 		}

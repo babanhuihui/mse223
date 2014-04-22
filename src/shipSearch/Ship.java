@@ -38,8 +38,8 @@ public class Ship {
 				probCX = 1.0/6;//left
 			}else if(x == 0){
 				probAX = 1;
-				probBX = 2.0/3;
-				probCX = 1.0/3;
+				probBX = 1.0/3;
+				probCX = 0.0;
 			}else{
 				probAX = 1;
 				probBX = 1.0/3;
@@ -49,10 +49,10 @@ public class Ship {
 			if(x == map.row){
 				probAX = 1;	 //right
 				probBX = 1;//stay
-				probCX = 1.0/2;//left
+				probCX = 1.0/3;//left
 			}else if(x == 0){
 				probAX = 1;
-				probBX = 1.0/2;
+				probBX = 2.0/3;
 				probCX = 0;
 			}else{
 				probAX = 1;
@@ -71,7 +71,7 @@ public class Ship {
 			}else{
 				probAX = 1;
 				probBX = 5.0/6;
-				probCX = 1.0/6;
+				probCX = 4.0/6;
 			}
 		}
 		
@@ -83,8 +83,8 @@ public class Ship {
 				probCY = 1.0/6;//left
 			}else if(y == 0){
 				probAY = 1;
-				probBY = 2.0/3;
-				probCY = 1.0/3;
+				probBY = 1.0/3;
+				probCY = 0;
 			}else{
 				probAY = 1;
 				probBY = 1.0/3;
@@ -94,10 +94,10 @@ public class Ship {
 			if(y == map.row){
 				probAY = 1;	 //right
 				probBY = 1;//stay
-				probCY = 1.0/2;//left
+				probCY = 1.0/3;//left
 			}else if(y == 0){
 				probAY = 1;
-				probBY = 1.0/2;
+				probBY = 2.0/3;
 				probCY = 0;
 			}else{
 				probAY = 1;
@@ -116,7 +116,7 @@ public class Ship {
 			}else{
 				probAY = 1;
 				probBY = 5.0/6;
-				probCY = 1.0/6;
+				probCY = 4.0/6;
 			}
 		}
 
@@ -150,7 +150,9 @@ public class Ship {
 	}
 	
 	public double generateHoldingTime(){
+		//how to calculate holding time
 		double holdingTime = 0.5 * Math.pow(unigen.nextValue(3), -0.5);
+		//System.out.println(holdingTime);
 		return holdingTime;
 	}
 	

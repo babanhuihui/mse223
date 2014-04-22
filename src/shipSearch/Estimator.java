@@ -45,8 +45,8 @@ class Estimator { // computes point estimates and confidence intervals
         double pointEstimate = mean();
         double cLower = pointEstimate - hw;
         double cUpper = pointEstimate + hw;
-        System.out.print(confStr+" Confidence Interval ["+df.format(cLower)+", "+df.format(cUpper)+"]");
-        System.out.println("Percentage: " + cLower/pointEstimate + " to " + cUpper/pointEstimate);
+        System.out.print(confStr+" Confidence Interval ["+df.format(cLower)+", "+df.format(cUpper)+"]" + "(HW(half width) =" +
+        		" " + hw + ")" + " Approximate relative error: " + Math.abs(100 * hw / this.mean()) + "%");
     }
 	
     public double mean() {
@@ -70,4 +70,3 @@ class Estimator { // computes point estimates and confidence intervals
         return sum;
     }
 }
-

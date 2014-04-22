@@ -10,9 +10,10 @@ public class Wind {
 	private static Clcg4 unigen;
 
 	
-	public Wind(double lamuda)
+	public Wind(double lamuda, Clcg4 gen)
 	{
 	    this.lamuda = lamuda;
+	    this.unigen = gen;
 		//direction = changeDirection();
 	    changeDirection();
 	}
